@@ -9,6 +9,7 @@ const EditEmployee = () => {
   const [phoneNumber, setPhoneNumber] = useState(selectedEmployee.phoneNumber);
   const [isOpen, setIsOpen] = useState(false);
   const [designation, setDesignation] = useState(selectedEmployee.designation);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -28,6 +29,7 @@ const EditEmployee = () => {
     }
     console.log(pics);
     if (pics.type === "image/jpeg" || pics.type === "image/png") {
+      setLoading(true);
       const data = new FormData();
       data.append("file", pics);
       data.append("upload_preset", "chat-app");
@@ -39,6 +41,7 @@ const EditEmployee = () => {
         .then((res) => res.json())
         .then((data) => {
           setFile(data?.url.toString());
+          setLoading(false);
           console.log(data.url.toString());
         })
         .catch((err) => {
@@ -266,7 +269,7 @@ const EditEmployee = () => {
         className="bg-blue-600 px-4 py-1 mt-2 mb-2 text-white rounded-md"
         onClick={handleSubmit}
       >
-        Save Changes
+        {loading? "Loading":"Save Changes"}
       </button>
     </div>
   );

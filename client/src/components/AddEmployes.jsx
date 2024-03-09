@@ -7,6 +7,7 @@ const AddEmployes = () => {
   const [phoneNumber, setPhoneNumber] = useState();
   const [isOpen, setIsOpen] = useState(false);
   const [designation, setDesignation] = useState(""); // State to store selected designation
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -20,6 +21,7 @@ const AddEmployes = () => {
   const [course, setCourse] = useState();
   const [file, setFile] = useState();
   const postDetails = (pics) => {
+    setLoading(true);
     if (pics === undefined) {
       console.log("pics are required");
       return;
@@ -37,6 +39,7 @@ const AddEmployes = () => {
         .then((res) => res.json())
         .then((data) => {
           setFile(data?.url.toString());
+          setLoading(false);
           console.log(data.url.toString());
         })
         .catch((err) => {
@@ -264,7 +267,7 @@ const AddEmployes = () => {
         className="bg-blue-600 px-4 py-1 mt-2 mb-2 text-white rounded-md"
         onClick={handleSubmit}
       >
-        Add
+        {loading ? "Loading" : "Add"}
       </button>
     </div>
   );

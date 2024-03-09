@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import EditEmployee from "./components/EditEmployee";
 
 import Layout from "./components/Layout";
@@ -10,6 +10,11 @@ import { useAppContext } from "./context/AppContext";
 
 function App() {
   const { username } = useAppContext();
+  const navigate = useNavigate();
+
+  if (!username) {
+    navigate("/login");
+  }
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
